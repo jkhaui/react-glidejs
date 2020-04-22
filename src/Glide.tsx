@@ -81,12 +81,12 @@ type Classes = {
 type Breakpoints = Record<number, object[]>
 
 interface IGlideProps extends React.HTMLProps<HTMLDivElement> {
-  children: React.ReactNode | null;
+  children: React.ReactElement<HTMLLIElement>[] | null;
   className?: string;
   style?: React.CSSProperties;
   hideArrows?: boolean;
-  leftArrowComponent?: React.ReactElement | null;
-  rightArrowComponent?: React.ReactElement | null;
+  leftArrowComponent?: React.ReactElement | string | null;
+  rightArrowComponent?: React.ReactElement | string | null;
   type?: string;
   startAt?: number;
   perView?: number;
@@ -148,8 +148,7 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
     >
       <div className="slider__track glide__track" data-glide-el="track">
         <ul className="glide__slides">
-          // @ts-ignore
-          {children.map((slide, index) => (
+          {children!.map((slide: React.ReactElement, index: number) => (
             <Fragment key={index}>
               {slide}
             </Fragment>

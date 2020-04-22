@@ -1,3 +1,5 @@
+/* Styles unashamedly taken from the source of https://glidejs.com/docs/ */
+
 body {
   background: blue;
 }
@@ -1035,7 +1037,6 @@ a:hover {
   left: 0;
   width: 100%;
   height: 100%;
-  display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
   -webkit-box-pack: center;
@@ -2056,7 +2057,7 @@ blockquote {
 }
 
 .glide {
-  cursor: -webkit-grab
+  cursor: -webkit-grab;
 }
 
 .glide__slides {
@@ -2072,7 +2073,7 @@ blockquote {
 }
 
 .glide--dragging {
-  cursor: -webkit-grabbing
+  cursor: -webkit-grabbing;
 }
 
 .panel {
@@ -2293,38 +2294,6 @@ blockquote {
 
 .slider--big .slider__arrow--prev {
   left: 3rem
-}
-
-.navbar:before {
-  content: '';
-  display: block;
-  width: 100%;
-  height: 15px;
-  background: -webkit-gradient(linear, left top, right top, from(#ED145B), to(#7B31F4));
-  background: linear-gradient(90deg, #ED145B 0, #7B31F4)
-}
-
-.navbar__wrapper {
-  padding-top: 2rem
-}
-
-.navbar__menu {
-  text-align: center
-}
-
-.navbar--variant .navbar__wrapper {
-  padding-top: 2rem;
-  padding-bottom: 2rem
-}
-
-.navbar--variant .navbar__menu {
-  text-align: right
-}
-
-@media (min-width: 42.5em) {
-  .navbar--variant .navbar__menu {
-    text-align: center
-  }
 }
 
 .button {

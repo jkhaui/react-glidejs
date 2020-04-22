@@ -1,8 +1,8 @@
 import React from 'react';
 
 interface ISlideProps {
-  children?: React.ReactNode,
-  className?: string,
+  children?: React.ReactNode;
+  className?: string;
 }
 
 export default ({ children, className, ...props }: ISlideProps) => (

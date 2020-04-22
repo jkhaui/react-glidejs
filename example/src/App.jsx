@@ -12,10 +12,10 @@ const App = () => {
         ref={gliderRef}
         type="slider"
         peek={{
-          before: 100,
-          after: 100
+          before: 500,
+          after: 500
         }}
-        perView={3}
+        perView={1}
         startAt={3}
         focusAt="center"
         leftArrowComponent={
