@@ -16,13 +16,13 @@ npm install --save react-glidejs
 
 This is a lightweight React wrapper over the fantastic Glide.js library by
  @jedrzejchalubek.
- 
+
 Currently, react-glidejs exposes all the options from the Glide.js API as
  props. View them all here: https://glidejs.com/docs/options/
- 
+
 There are 2 components exported. They are `Glide`, the main component, which
  wraps its `Slide` children components.
- 
+
 Props are passed to the `Glide` component. Some additional props are also
  supplied for easier customisation, such as the `leftArrowComponent` and
   `rightArrowComponent` props which accept a React node.
@@ -34,14 +34,14 @@ import Glide, { Slide } from 'react-glidejs';
 
 export default () => (
   <Glide
-    type="slider"
-    peek={{
-      before: 500,
-      after: 500,
-    }}
-    perView={3}
-    startAt={3}
-    focusAt="center"
+      type="slider"
+      peek={{
+        before: 100,
+        after: 100,
+      }}
+      perView={3}
+      startAt={3}
+      focusAt="center"
   >
     <Slide>
       Slide 1
