@@ -9,6 +9,8 @@ import Glide from '@glidejs/glide';
 import { CSSTransition } from 'react-transition-group';
 import { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
 
+import Slide from './Slide';
+
 import ArrowLeftIcon from './icons/ArrowLeftIcon';
 import ArrowRightIcon from './icons/ArrowRightIcon';
 import {
@@ -85,7 +87,6 @@ const defaultProps = {
     activeSlide: 'glide__slide--active',
     disabledArrow: 'glide__arrow--disabled',
   },
-  throttle: 25,
 };
 
 type Peek = {
@@ -113,6 +114,7 @@ type Breakpoints = Record<number, object[]>
 interface IGlideProps extends React.HTMLProps<HTMLDivElement> {
   children: React.ReactElement<HTMLLIElement>[] | null;
   className?: string;
+  slideClassName?: string;
   style?: React.CSSProperties;
 
   hideArrows?: boolean;
@@ -183,6 +185,7 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
   const {
     children,
     className,
+    slideClassName,
     hideArrows,
     arrowSize,
     arrowColor,
@@ -219,6 +222,7 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
   } = props;
 
   const glideRef = useRef(null);
+  const slideRef = useRef([]);
 
   const [activeSlide, setActiveSlide] = useState(startAt === 0 ? 0 : startAt);
 
@@ -345,7 +349,96 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
       }
     });
 
-    glide.mount();
+    // const tiltableElement = '.glide__container';
+    glide.mount({
+
+      // Coverflow: (
+      //   Glide: { index: string | number; },
+      //   Components: { Html: { slides: { [x: string]: any; }; }; },
+      //   Events: { on: (arg0: string[], arg1: () => void) => void; },
+      // ) => {
+      //   const Plugin = {
+      //     tilt(element: { querySelector: (arg0: string) => { (): any; new(): any; style: { (): any; new(): any; transform: string; }; }; }) {
+      //       element.querySelector(tiltableElement).style.transform = 'perspective(1500px) rotateY(0deg)';
+      //       this.tiltPrevElements();
+      //       this.tiltNextElements();
+      //     },
+      //     tiltPrevElements() {
+      //       const activeSlide = Components.Html.slides[Glide.index];
+      //
+      //       const previousElements: any[] = [];
+      //       const getPrevious = (element: { previousElementSibling: any; }) => {
+      //         const e = element.previousElementSibling;
+      //         if (e) {
+      //           previousElements.push(e.querySelector(tiltableElement));
+      //           getPrevious(e);
+      //         }
+      //       };
+      //       getPrevious(activeSlide);
+      //
+      //       previousElements.forEach((item, index) => {
+      //         item.style.transformOrigin = '100% 50%';
+      //         item.style.transform = `perspective(1500px) rotateY(${20 * Math.max(
+      //           index,
+      //           2,
+      //         )}deg)`;
+      //       });
+      //
+      //     },
+      //     tiltNextElements() {
+      //       const activeSlide = Components.Html.slides[Glide.index];
+      //
+      //       const nextElements: any[] = [];
+      //
+      //       const getNext = (element: { nextElementSibling: any; }) => {
+      //         const e = element.nextElementSibling;
+      //         if (e) {
+      //           nextElements.push(e.querySelector(tiltableElement));
+      //           getNext(e);
+      //         }
+      //       };
+      //       getNext(activeSlide);
+      //
+      //       nextElements.forEach((item, index) => {
+      //         item.style.transformOrigin = '0% 50%';
+      //         item.style.transform = `perspective(1500px) rotateY(${-20 * Math.max(
+      //           index,
+      //           2,
+      //         )}deg)`;
+      //       });
+      //     },
+      //   };
+      //
+      //   Events.on(['mount.after', 'run'], () => {
+      //     Plugin.tilt(Components.Html.slides[Glide.index]);
+      //   });
+      //
+      //   return Plugin;
+      // },
+
+
+      // Coverflow: (
+      //   Glide: { index: string | number; },
+      //   Components: { Html: { slides: { [x: string]: any; }; }; },
+      //   Events: { on: (arg0: string[], arg1: () => void) => void; },
+      // ) => {
+      //   const Plugin = {
+      //     tilt() {
+      //       if (slideRef.current[Glide.index]) {
+      //         slideRef.current[Glide.index].style.transform =
+      // 'perspective(1500px)' + ' rotateY(0deg)'; this.tiltPrevElements();
+      // this.tiltNextElements(); } }, tiltPrevElements() { const activeSlide =
+      //  // const activeSlide = Components.Html.slides[Glide.index]; //
+      // console.log(activeSlide); //
+      // console.log(slideRef.current[Glide.index]); const previousElements:
+      // any[] = []; const getPrevious = () => { const previousSlide =
+      // slideRef.current[Glide.index as number - 1];    if (previousSlide) {
+      // previousElements.push(previousSlide); // getPrevious(); } };
+      // getPrevious();  previousElements.forEach((item, index) => {
+      // item.style.transformOrigin = '100% 50%'; item.style.transform = `perspective(1500px) rotateY(${20 * Math.max( index, 2, )}deg)`; });  }, tiltNextElements() { const nextElements: any[] = [];  const getNext = () => { const nextSlide = slideRef.current[Glide.index as number - 1]; if (nextSlide) { nextElements.push(nextSlide); getNext(); } }; getNext();  nextElements.forEach((item, index) => { item.style.transformOrigin = '0% 50%'; item.style.transform = `perspective(1500px) rotateY(${-20 * Math.max( index, 2, )}deg)`; }); }, };  Events.on(['mount.after', 'run'], () => { Plugin.tilt(); });  return Plugin; },
+    });
+
+    console.log(slideRef.current);
 
     return () => glide.destroy();
   }, []);
@@ -367,12 +460,20 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
                   onEnter={customSlideAnimation.onEnter}
                   onExit={customSlideAnimation.onExit}
                 >
-                  {slide}
+                  <Slide
+                    ref={slideRef as any}
+                    index={index}
+                    slide={slide}
+                    slideClassName={slideClassName}
+                  />
                 </CSSTransition>
               ) : (
-                <Fragment>
-                  {slide}
-                </Fragment>
+                <Slide
+                  ref={slideRef as any}
+                  index={index}
+                  slide={slide}
+                  slideClassName={slideClassName}
+                />
               )}
             </Fragment>
           ))}

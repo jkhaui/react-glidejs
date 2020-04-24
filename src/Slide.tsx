@@ -1,12 +1,17 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 
-interface ISlideProps {
-  children?: React.ReactNode;
-  className?: string;
-}
+// interface ISlideProps {
+//   children?: React.ReactNode;
+//   slideClassName?: string;
+// }
 
-export default ({ children, className, ...props }: ISlideProps) => (
-  <li className={`glide__slide ${className || ''}`} {...props}>
-    {children}
+export default forwardRef<React.RefObject<HTMLDivElement | null>, any>((
+  { slide, index, slideClassName, ...rest }: any,
+  ref: any,
+) => (
+  <li className={`glide__ slide ${slideClassName || ''}`} {...rest}>
+    <div ref={slideRef => ref.current[index] = slideRef} className="glide__container">
+      {slide}
+    </div>
   </li>
-);
+));

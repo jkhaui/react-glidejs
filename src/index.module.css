@@ -1,3 +1,17 @@
+/* Potential fixes for an undesirable and intermittent flashing background bug. */
+:global .glide__slide {
+  /* Fix for flashing background image on slide */
+  -webkit-transform: translate3d(0, 0, 0);
+  -moz-transform: translate3d(0, 0, 0);
+  -ms-transform: translate3d(0, 0, 0);
+  -o-transform: translate3d(0, 0, 0);
+  transform: translate3d(0, 0, 0);
+}
+
+:global .slider__frame[class*=active] {
+  z-index: 1;
+}
+
 .sliderArrow {
   position: absolute;
   padding: 12px;

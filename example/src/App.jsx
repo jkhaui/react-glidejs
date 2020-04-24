@@ -1,11 +1,34 @@
-import React, { useRef } from 'react';
-import Glide, { Slide } from 'react-glidejs';
+import React, { useRef, Fragment } from 'react';
+import Glide from 'react-glidejs';
+import {gsap} from 'gsap';
 
 import 'react-glidejs/dist/index.css';
 import './transitions.css';
 
 export default () => {
   const gliderRef = useRef(null);
+
+  const onEnter = slide => {
+    gsap.from(slide, 0.6, {
+      y: 30,
+      delay: 0.6,
+      ease: 'power3.InOut',
+      opacity: 0,
+      stagger: {
+        amount: 0.6,
+      },
+    });
+  };
+
+  const onExit = slide => {
+    gsap.to(slide, 0.6, {
+      y: -30,
+      ease: 'power3.InOut',
+      stagger: {
+        amount: 0.2,
+      },
+    });
+  };
 
   return (
     <div className="App">
@@ -16,7 +39,10 @@ export default () => {
         customSlideAnimation={{
           timeout: 500,
           classNames: 'fade',
+          onEnter: onEnter,
+          onExit: onExit,
         }}
+        slideClassName="slider__frame"
         peek={{
           before: 500,
           after: 500,
@@ -25,54 +51,54 @@ export default () => {
         startAt={3}
         focusAt="center"
       >
-        <Slide className="glide__slide slider__frame">
+        <Fragment>
           0
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           1
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           2
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           3
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           4
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           5
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           6
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           7
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           8
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           9
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           10
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           11
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           12
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           13
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           14
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           15
-        </Slide>
+        </Fragment>
       </Glide>
     </div>
   );

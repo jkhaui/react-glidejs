@@ -1,8 +1,48 @@
-/* Styles unashamedly taken from the source of https://glidejs.com/docs/ */
+/*.glide__slides {*/
+/*  overflow: visible;*/
+/*  transform-style: preserve-3d;*/
+/*}*/
+
+/*.glide__slide {*/
+/*  transform: perspective(2000px);*/
+/*}*/
+
+/*.glide__container {*/
+/*  border: 2px solid #000;*/
+/*  border-radius: 4px;*/
+/*  width: 200px;*/
+/*  height: 200px;*/
+/*  transition: all 500ms ease;*/
+/*  will-change: transform;*/
+/*  transform-style: preserve-3d;*/
+/*  position: relative;*/
+/*}*/
+
+/*!* Styles unashamedly taken from the source of https://glidejs.com/docs/ *!*/
 
 body {
   font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
   background: #1B262C;
+}
+
+.glide__slides {
+  overflow: visible;
+  transform-style: preserve-3d;
+}
+
+.glide__slide {
+  transform: perspective(2000px);
+}
+
+.glide__container {
+  border: 2px solid #000;
+  border-radius: 4px;
+  width: 200px;
+  height: 200px;
+  transition: all 500ms ease;
+  will-change: transform;
+  transform-style: preserve-3d;
+  position: relative;
 }
 
 .glide {
