@@ -1,27 +1,29 @@
-import React, { useRef } from 'react'
-import Glide, { Slide } from 'react-glidejs'
+import React, { useRef } from 'react';
+import Glide, { Slide } from 'react-glidejs';
 
-import 'react-glidejs/dist/index.css'
+import 'react-glidejs/dist/index.css';
+import './transitions.css';
 
-const App = () => {
-  const gliderRef = useRef(null)
+export default () => {
+  const gliderRef = useRef(null);
 
   return (
     <div className="App">
       <Glide
         ref={gliderRef}
         type="slider"
+        adjustArrowYPosition="42%"
+        customSlideAnimation={{
+          timeout: 500,
+          classNames: 'fade',
+        }}
         peek={{
           before: 500,
-          after: 500
+          after: 500,
         }}
         perView={1}
         startAt={3}
         focusAt="center"
-        leftArrowComponent={
-          <span className="slider__arrow slider__arrow--prev glide__arrow glide__arrow--prev">{'<'}</span>}
-        rightArrowComponent={
-          <span className="slider__arrow slider__arrow--next glide__arrow glide__arrow--next">></span>}
       >
         <Slide className="glide__slide slider__frame">
           0
@@ -50,10 +52,28 @@ const App = () => {
         <Slide className="glide__slide slider__frame">
           8
         </Slide>
-
+        <Slide className="glide__slide slider__frame">
+          9
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          10
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          11
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          12
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          13
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          14
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          15
+        </Slide>
       </Glide>
     </div>
-  )
-}
-
-export default App
+  );
+};

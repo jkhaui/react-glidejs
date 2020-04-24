@@ -1,0 +1,25 @@
+.sliderArrow {
+  position: absolute;
+  padding: 12px;
+  z-index: 1;
+  margin-top: -9px;
+  border-radius: 50%;
+  -webkit-transition: all .2s ease-in-out;
+  transition: all .2s ease-in-out;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+}
+
+.sliderArrow:hover {
+  background-color: rgba(0, 0, 0, .04);
+  transition: background-color .2s ease-in-out;
+}
+
+.sliderArrowNext {
+  right: 1.5rem;
+}
+
+.slideArrowPrev {
+  left: 1.5rem;
+}

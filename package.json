@@ -54,6 +54,8 @@
     "dist"
   ],
   "dependencies": {
-    "@glidejs/glide": "^3.4.1"
+    "@glidejs/glide": "^3.4.1",
+    "@types/react-transition-group": "^4.2.4",
+    "react-transition-group": "^4.3.0"
   }
 }

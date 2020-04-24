@@ -1,0 +1,17 @@
+/* Example demonstrating how to use `react-transition-group` and CSS to animate 
+slides in `react-glidejs`. */
+
+.fade-enter-active {
+  opacity: .5;
+  transition: opacity 250ms ease-in;
+}
+
+.fade-enter-done {
+  opacity: 1;
+  transition: opacity 250ms ease-in;
+}
+
+.fade-exit {
+  box-shadow: inset 0 0 0 2px hsla(0, 0%, 100%, .5) !important;
+  background: transparent !important;
+}

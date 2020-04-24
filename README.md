@@ -9,6 +9,11 @@
 ```bash
 npm install --save react-glidejs
 ```
+OR
+
+```
+yarn add react-glidejs
+```
 
 ## Usage
 
