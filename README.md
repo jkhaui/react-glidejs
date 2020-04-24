@@ -17,8 +17,6 @@ yarn add react-glidejs
 
 ## Usage
 
-# WIP
-
 This is a lightweight React wrapper over the fantastic Glide.js library by
  @jedrzejchalubek.
 
@@ -32,39 +30,98 @@ Props are passed to the `Glide` component. Some additional props are also
  supplied for easier customisation, such as the `leftArrowComponent` and
   `rightArrowComponent` props which accept a React node.
 
-```tsx
-import React from 'react'
+The goal is to keep the API surface as small and lightweight as possible, while
+also providing an easy way for customisation in line with common React
+ patterns. Therefore, this library uses `react-transition-group` under the hood
+ to provide an easy way to add custom slide animations.
 
+Example Usage
+---
+```tsx
+import React, { useRef } from 'react';
 import Glide, { Slide } from 'react-glidejs';
 
-export default () => (
-  <Glide
-      type="slider"
-      peek={{
-        before: 100,
-        after: 100,
+import 'react-glidejs/dist/index.css';
+import './transitions.css';
+
+export default () => {
+  const gliderRef = useRef(null);
+
+  return (
+    <div
+      className="App"
+      style={{
+        background: '#1B262C',
       }}
-      perView={3}
-      startAt={3}
-      focusAt="center"
-  >
-    <Slide>
-      Slide 1
-    </Slide>
-    <Slide>
-      Slide 2
-    </Slide>
-    <Slide>
-      Slide 3
-    </Slide>
-    <Slide>
-      Slide 4
-    </Slide>
-    <Slide>
-      Slide 5
-    </Slide>
-  </Glide>
-);
+    >
+      <Glide
+        ref={gliderRef}
+        type="slider"
+        adjustArrowYPosition="42%"
+        customSlideAnimation={{
+          timeout: 500,
+          classNames: 'fade',
+        }}
+        peek={{
+          before: 500,
+          after: 500,
+        }}
+        perView={1}
+        startAt={3}
+        focusAt="center"
+      >
+        <Slide className="glide__slide slider__frame">
+          0
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          1
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          2
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          3
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          4
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          5
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          6
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          7
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          8
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          9
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          10
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          11
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          12
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          13
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          14
+        </Slide>
+        <Slide className="glide__slide slider__frame">
+          15
+        </Slide>
+      </Glide>
+    </div>
+  );
+};
 
 ```
 
