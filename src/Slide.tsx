@@ -1,12 +1,8 @@
 import React from 'react';
+import { ISlideProps } from './types';
 
-interface ISlideProps {
-  children?: React.ReactNode;
-  className?: string;
-}
-
-export default ({ children, className, ...props }: ISlideProps) => (
-  <li className={`glide__slide ${className || ''}`} {...props}>
-    {children}
+export default ({ slide, index, slideClassName, ...rest }: ISlideProps) => (
+  <li className={`glide__slide ${slideClassName || ''}`} {...rest}>
+    {slide}
   </li>
 );

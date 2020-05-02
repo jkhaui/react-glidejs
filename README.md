@@ -17,17 +17,13 @@ yarn add react-glidejs
 
 ## Usage
 
-This is a lightweight React wrapper over the fantastic Glide.js library by
- @jedrzejchalubek.
+A lightweight React wrapper for Glide.js by @jedrzejchalubek. React-glidejs
+ exposes all the options from the Glide.js API as props. View them all here: 
+ https://glidejs.com/docs/options/
 
-Currently, react-glidejs exposes all the options from the Glide.js API as
- props. View them all here: https://glidejs.com/docs/options/
-
-There are 2 components exported. They are `Glide`, the main component, which
- wraps its `Slide` children components.
-
-Props are passed to the `Glide` component. Some additional props are also
- supplied for easier customisation, such as the `leftArrowComponent` and
+Import the `Glide` component. Every React node (either a DOM element or a JSX
+ Fragment) is treated as a slide. Some additional props have also been
+ added for easier customisation, e.g.`leftArrowComponent` and
   `rightArrowComponent` props which accept a React node.
 
 The goal is to keep the API surface as small and lightweight as possible, while
@@ -56,8 +52,8 @@ export default () => {
     >
       <Glide
         ref={gliderRef}
+        throttle={0}
         type="slider"
-        adjustArrowYPosition="42%"
         customSlideAnimation={{
           timeout: 500,
           classNames: 'fade',
@@ -68,56 +64,51 @@ export default () => {
         }}
         perView={1}
         startAt={3}
+        slideClassName="slider__frame"
         focusAt="center"
       >
-        <Slide className="glide__slide slider__frame">
-          0
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        <Fragment>
           1
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           2
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           3
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           4
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           5
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           6
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           7
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           8
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           9
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           10
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           11
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           12
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           13
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           14
-        </Slide>
-        <Slide className="glide__slide slider__frame">
-          15
-        </Slide>
+        </Fragment>
       </Glide>
     </div>
   );

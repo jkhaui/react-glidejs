@@ -1,5 +1,5 @@
-import React, { useRef } from 'react';
-import Glide, { Slide } from 'react-glidejs';
+import React, { Fragment, useRef } from 'react';
+import Glide from 'react-glidejs';
 
 import 'react-glidejs/dist/index.css';
 import './transitions.css';
@@ -11,8 +11,8 @@ export default () => {
     <div className="App">
       <Glide
         ref={gliderRef}
+        throttle={0}
         type="slider"
-        adjustArrowYPosition="42%"
         customSlideAnimation={{
           timeout: 500,
           classNames: 'fade',
@@ -23,56 +23,51 @@ export default () => {
         }}
         perView={1}
         startAt={3}
+        slideClassName="slider__frame"
         focusAt="center"
       >
-        <Slide className="glide__slide slider__frame">
-          0
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        <Fragment>
           1
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           2
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           3
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           4
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           5
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           6
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           7
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           8
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           9
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           10
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           11
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           12
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           13
-        </Slide>
-        <Slide className="glide__slide slider__frame">
+        </Fragment>
+        <Fragment>
           14
-        </Slide>
-        <Slide className="glide__slide slider__frame">
-          15
-        </Slide>
+        </Fragment>
       </Glide>
     </div>
   );

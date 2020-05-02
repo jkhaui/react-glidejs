@@ -1,4 +1,5 @@
 import React, {
+  Children,
   forwardRef,
   Fragment,
   useEffect,
@@ -6,9 +7,9 @@ import React, {
   useState,
 } from 'react';
 import Glide from '@glidejs/glide';
-import { CSSTransition } from 'react-transition-group';
-import { CSSTransitionClassNames } from 'react-transition-group/CSSTransition';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
+import Slide from './Slide';
 import ArrowLeftIcon from './icons/ArrowLeftIcon';
 import ArrowRightIcon from './icons/ArrowRightIcon';
 import {
@@ -34,6 +35,7 @@ import {
   UPDATE,
 } from './constants';
 
+import { IGlideProps } from './types';
 import baseStyles from './index.module.css';
 import '@glidejs/glide/dist/css/glide.core.min.css';
 
@@ -45,148 +47,27 @@ const styles = {
 };
 
 const defaultProps = {
-  /* Additional props */
+  /* Additional React props */
   children: null,
   className: 'glide',
   style: {},
   hideArrows: false,
-
-  /* Glide.js options with defaults */
-  type: 'slider',
-  startAt: 0,
-  perView: 1,
-  focusAt: 0,
-  gap: 10,
-  autoplay: false,
-  hoverPause: true,
-  keyboard: true,
-  bound: false,
-  swipeThreshold: 80,
-  dragThreshold: 120,
-  perTouch: false,
-  touchRatio: 0.5,
-  touchAngle: 45,
-  rewind: true,
-  rewindDuration: 800,
-  direction: 'ltr',
-  peek: 0,
-  breakpoints: {},
-  classes: {
-    direction: {
-      ltr: 'glide--ltr',
-      rtl: 'glide--rtl',
-    },
-    slider: 'glide--slider',
-    carousel: 'glide--carousel',
-    swipeable: 'glide--swipeable',
-    dragging: 'glide--dragging',
-    cloneSlide: 'glide__slide--clone',
-    activeNav: 'glide__bullet--active',
-    activeSlide: 'glide__slide--active',
-    disabledArrow: 'glide__arrow--disabled',
-  },
-  throttle: 25,
 };
 
-type Peek = {
-  before: number,
-  after: number,
-}
-
-type Classes = {
-  direction: {
-    ltr: string,
-    rtl: string,
-  },
-  slider: string,
-  carousel: string,
-  swipeable: string,
-  dragging: string,
-  cloneSlide: string,
-  activeNav: string,
-  activeSlide: string,
-  disabledArrow: string,
-}
-
-type Breakpoints = Record<number, object[]>
-
-interface IGlideProps extends React.HTMLProps<HTMLDivElement> {
-  children: React.ReactElement<HTMLLIElement>[] | null;
-  className?: string;
-  style?: React.CSSProperties;
-
-  hideArrows?: boolean;
-  arrowSize?: number;
-  arrowColor?: string;
-  adjustArrowYPosition?: number | string;
-  leftArrowComponent?: React.ReactElement | string | null;
-  rightArrowComponent?: React.ReactElement | string | null;
-
-  // Custom slide transitions.
-  customSlideAnimation?: {
-    timeout: number;
-    classNames: string | CSSTransitionClassNames;
-    onEnter?: () => void;
-    onExit?: () => void;
-  }
-  // Glide.js custom events.
-  mountBefore?: () => void;
-  mountAfter?: () => void;
-  update?: () => void;
-  play?: () => void;
-  pause?: () => void;
-  buildBefore?: () => void;
-  buildAfter?: () => void;
-  runBefore?: () => void;
-  run?: () => void;
-  runAfter?: () => void;
-  runOffset?: () => void;
-  runStart?: () => void;
-  runEnd?: () => void;
-  move?: () => void;
-  moveAfter?: () => void;
-  resize?: () => void;
-  swipeStart?: () => void
-  swipeMove?: () => void;
-  swipeEnd?: () => void;
-  translateJump?: () => void;
-
-  type?: string;
-  startAt?: number;
-  perView?: number;
-  focusAt?: number | string;
-  gap?: number;
-  autoplay?: number | boolean;
-  hoverPause?: boolean;
-  keyboard?: boolean;
-  bound?: boolean;
-  swipeThreshold?: number | boolean;
-  dragThreshold?: number | boolean;
-  perTouch?: number | boolean;
-  touchRatio?: number;
-  touchAngle?: number;
-  animationDuration?: number;
-  rewind?: boolean;
-  rewindDuration?: number;
-  animationTimingFunc?: string;
-  direction?: string;
-  peek?: number | Peek;
-  breakpoints?: Breakpoints;
-  classes?: Classes;
-  throttle?: number;
-}
-
-export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
+export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
   props = defaultProps,
-  ref,
+  ref: React.MutableRefObject<any>,
 ) => {
   const {
     children,
     className,
+    slideClassName,
     hideArrows,
     arrowSize,
     arrowColor,
     adjustArrowYPosition,
+    leftArrowIcon,
+    rightArrowIcon,
     leftArrowComponent,
     rightArrowComponent,
     style,
@@ -196,35 +77,41 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
 
     customSlideAnimation,
 
-    mountBefore,
-    mountAfter,
-    update,
-    play,
-    pause,
-    buildBefore,
-    buildAfter,
-    runBefore,
-    run,
-    runAfter,
-    runOffset,
-    runStart,
-    runEnd,
-    move,
-    moveAfter,
-    resize,
-    swipeStart,
-    swipeMove,
-    swipeEnd,
-    translateJump,
+    onMountBefore,
+    onMountAfter,
+    onUpdate,
+    onPlay,
+    onPause,
+    onBuildBefore,
+    onBuildAfter,
+    onRunBefore,
+    onRun,
+    onRunAfter,
+    onRunOffset,
+    onRunStart,
+    onRunEnd,
+    onMove,
+    onMoveAfter,
+    onResize,
+    onSwipeStart,
+    onSwipeMove,
+    onSwipeEnd,
+    onTranslateJump,
   } = props;
 
-  const glideRef = useRef(null);
+  if (!children || Children.count(children) < 2) {
+    throw new Error('At least 2 slides must be provided to the Glide'
+      + ' component.');
+  }
+
+  const glideRef = useRef<HTMLDivElement>(null);
 
   const [activeSlide, setActiveSlide] = useState(startAt === 0 ? 0 : startAt);
 
   useEffect(() => {
-    // @ts-ignore
-    const glide = new Glide(ref ? ref.current : glideRef.current, {
+    let glide: any;
+
+    glide = new Glide(glideRef.current, {
       ...props,
       // If the `customSlideAnimation` prop is passed, then override
       // Glide.js' default animation values.
@@ -234,6 +121,7 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
         ? customSlideAnimation.timeout
         : animationDuration
           ? animationDuration
+          // ...otherwise use the default duration of 400ms.
           : 400,
       animationTimingFunc: customSlideAnimation
         ? ''
@@ -243,121 +131,131 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
     });
 
     glide.on(MOUNT_BEFORE, () => {
-      if (mountBefore) {
-        mountBefore();
+      if (onMountBefore) {
+        onMountBefore();
       }
     });
     glide.on(MOUNT_AFTER, () => {
-      if (mountAfter) {
-        mountAfter();
+      if (onMountAfter) {
+        onMountAfter();
       }
     });
     glide.on(UPDATE, () => {
-      if (update) {
-        update();
+      if (onUpdate) {
+        onUpdate();
       }
     });
     glide.on(PLAY, () => {
-      if (play) {
-        play();
+      if (onPlay) {
+        onPlay();
       }
     });
     glide.on(PAUSE, () => {
-      if (pause) {
-        pause();
+      if (onPause) {
+        onPause();
       }
     });
     glide.on(BUILD_BEFORE, () => {
-      if (buildBefore) {
-        buildBefore();
+      if (onBuildBefore) {
+        onBuildBefore();
       }
     });
     glide.on(BUILD_AFTER, () => {
-      if (buildAfter) {
-        buildAfter();
+      if (onBuildAfter) {
+        onBuildAfter();
       }
     });
     glide.on(RUN_BEFORE, () => {
-      if (runBefore) {
-        runBefore();
+      if (onRunBefore) {
+        onRunBefore();
       }
     });
     glide.on(RUN, () => {
       setActiveSlide(glide.index);
 
-      if (run) {
-        run();
+      if (onRun) {
+        onRun();
       }
     });
     glide.on(RUN_AFTER, () => {
-      if (runAfter) {
-        runAfter();
+      if (onRunAfter) {
+        onRunAfter();
       }
     });
     glide.on(RUN_OFFSET, () => {
-      if (runOffset) {
-        runOffset();
+      if (onRunOffset) {
+        onRunOffset();
       }
     });
     glide.on(RUN_START, () => {
-      if (runStart) {
-        runStart();
+      if (onRunStart) {
+        onRunStart();
       }
     });
     glide.on(RUN_END, () => {
-      if (runEnd) {
-        runEnd();
+      if (onRunEnd) {
+        onRunEnd();
       }
     });
     glide.on(MOVE, () => {
-      if (move) {
-        move();
+      if (onMove) {
+        onMove();
       }
     });
     glide.on(MOVE_AFTER, () => {
-      if (moveAfter) {
-        moveAfter();
+      if (onMoveAfter) {
+        onMoveAfter();
       }
     });
     glide.on(RESIZE, () => {
-      if (resize) {
-        resize();
+      if (onResize) {
+        onResize();
       }
     });
     glide.on(SWIPE_START, () => {
-      if (swipeStart) {
-        swipeStart();
+      if (onSwipeStart) {
+        onSwipeStart();
       }
     });
     glide.on(SWIPE_MOVE, () => {
-      if (swipeMove) {
-        swipeMove();
+      if (onSwipeMove) {
+        onSwipeMove();
       }
     });
     glide.on(SWIPE_END, () => {
-      if (swipeEnd) {
-        swipeEnd();
+      if (onSwipeEnd) {
+        onSwipeEnd();
       }
     });
     glide.on(TRANSLATE_JUMP, () => {
-      if (translateJump) {
-        translateJump();
+      if (onTranslateJump) {
+        onTranslateJump();
       }
     });
 
-    glide.mount();
+    glide.mount(/* TODO: Put custom events here */);
+
+    if (ref) {
+      // Provides direct access to the underlying Glide object is a ref is
+      // passed from the parent component.
+      ref.current = glide;
+    }
 
     return () => glide.destroy();
   }, []);
+
   return (
     <div
+      ref={glideRef}
       className={className}
-      ref={ref || glideRef as any}
-      style={{ ...styles, ...style as any }}
+      style={{
+        ...styles,
+        ...style as any,
+      }}
     >
       <div className="slider__track glide__track" data-glide-el="track">
-        <ul className="glide__slides">
-          {children!.map((slide: React.ReactElement, index: number) => (
+        <TransitionGroup component="ul" className="glide__slides">
+          {children.map((slide: React.ReactElement, index: number) => (
             <Fragment key={index}>
               {customSlideAnimation ? (
                 <CSSTransition
@@ -367,45 +265,64 @@ export default forwardRef<React.RefObject<HTMLDivElement | null>, IGlideProps>((
                   onEnter={customSlideAnimation.onEnter}
                   onExit={customSlideAnimation.onExit}
                 >
-                  {slide}
+                  <Slide
+                    slideClassName={slideClassName}
+                    slide={slide}
+                    index={index}
+                  />
                 </CSSTransition>
               ) : (
                 <Fragment>
-                  {slide}
+                  <Slide
+                    slideClassName={slideClassName}
+                    slide={slide}
+                    index={index}
+                  />
                 </Fragment>
               )}
             </Fragment>
           ))}
-        </ul>
+        </TransitionGroup>
       </div>
+
       {!hideArrows && (
         <div style={{ height: 0 }} data-glide-el="controls">
-          <button data-glide-dir="<">
-            <span
-              className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowPrev}`}
-              style={{
-                top: adjustArrowYPosition ? adjustArrowYPosition : '50%',
-              }}
-            >
-            {leftArrowComponent
-              ? leftArrowComponent : (
+          {leftArrowComponent ? (
+            <Fragment>
+              {leftArrowComponent}
+            </Fragment>
+          ) : (
+            <button data-glide-dir="<">
+              <span
+                className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowPrev}`}
+                style={{
+                  top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
+                }}
+              >
+              {leftArrowIcon ? leftArrowIcon : (
                 <ArrowLeftIcon iconSize={arrowSize} color={arrowColor} />
               )}
-            </span>
-          </button>
-          <button data-glide-dir=">">
-            <span
-              className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowNext}`}
-              style={{
-                top: adjustArrowYPosition ? adjustArrowYPosition : '50%',
-              }}
-            >
-            {rightArrowComponent
-              ? rightArrowComponent : (
+              </span>
+            </button>
+          )}
+          {rightArrowComponent ? (
+            <Fragment>
+              {rightArrowComponent}
+            </Fragment>
+          ) : (
+            <button data-glide-dir=">">
+              <span
+                className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowNext}`}
+                style={{
+                  top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
+                }}
+              >
+              {rightArrowIcon ? rightArrowIcon : (
                 <ArrowRightIcon iconSize={arrowSize} color={arrowColor} />
               )}
-            </span>
-          </button>
+              </span>
+            </button>
+          )}
         </div>
       )}
     </div>
