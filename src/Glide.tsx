@@ -47,11 +47,6 @@ const styles = {
   boxSizing: 'border-box',
 };
 
-const customArrowComponentStyles = {
-  position: 'absolute',
-  top: '42%',
-};
-
 const defaultProps = {
   /* Additional React props */
   children: null,
@@ -71,7 +66,6 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
     hideArrows,
     arrowSize,
     arrowColor,
-    adjustArrowYPosition,
     leftArrowComponent,
     rightArrowComponent,
     style,
@@ -292,20 +286,14 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
           {leftArrowComponent ? (
             <Fragment>
               {cloneElement(leftArrowComponent as any, {
-                style: {
-                  ...customArrowComponentStyles,
-                  left: '1.5rem',
-                },
+                className: `${baseStyles.sliderArrow} Glide-leftArrow`,
                 'data-glide-dir': '<',
               })}
             </Fragment>
           ) : (
             <button
               data-glide-dir="<"
-              className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowPrev}`}
-              style={{
-                top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
-              }}
+              className={`${baseStyles.sliderArrow} Glide-leftArrow`}
             >
               <ArrowLeftIcon iconSize={arrowSize} color={arrowColor} />
             </button>
@@ -314,20 +302,14 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
           {rightArrowComponent ? (
             <Fragment>
               {cloneElement(rightArrowComponent as any, {
-                style: {
-                  ...customArrowComponentStyles,
-                  right: '1.5rem',
-                },
+                className: `${baseStyles.sliderArrow} Glide-rightArrow`,
                 'data-glide-dir': '>',
               })}
             </Fragment>
           ) : (
             <button
               data-glide-dir=">"
-              className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowNext}`}
-              style={{
-                top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
-              }}
+              className={`${baseStyles.sliderArrow} Glide-rightArrow`}
             >
               <ArrowRightIcon iconSize={arrowSize} color={arrowColor} />
             </button>
