@@ -1,5 +1,6 @@
 import React, {
   Children,
+  cloneElement,
   forwardRef,
   Fragment,
   useEffect,
@@ -46,6 +47,11 @@ const styles = {
   boxSizing: 'border-box',
 };
 
+const customArrowComponentStyles = {
+  position: 'absolute',
+  top: '42%',
+};
+
 const defaultProps = {
   /* Additional React props */
   children: null,
@@ -66,8 +72,6 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
     arrowSize,
     arrowColor,
     adjustArrowYPosition,
-    leftArrowIcon,
-    rightArrowIcon,
     leftArrowComponent,
     rightArrowComponent,
     style,
@@ -272,13 +276,11 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
                   />
                 </CSSTransition>
               ) : (
-                <Fragment>
-                  <Slide
-                    slideClassName={slideClassName}
-                    slide={slide}
-                    index={index}
-                  />
-                </Fragment>
+                <Slide
+                  slideClassName={slideClassName}
+                  slide={slide}
+                  index={index}
+                />
               )}
             </Fragment>
           ))}
@@ -289,38 +291,45 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
         <div style={{ height: 0 }} data-glide-el="controls">
           {leftArrowComponent ? (
             <Fragment>
-              {leftArrowComponent}
+              {cloneElement(leftArrowComponent as any, {
+                style: {
+                  ...customArrowComponentStyles,
+                  left: '1.5rem',
+                },
+                'data-glide-dir': '<',
+              })}
             </Fragment>
           ) : (
-            <button data-glide-dir="<">
-              <span
-                className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowPrev}`}
-                style={{
-                  top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
-                }}
-              >
-              {leftArrowIcon ? leftArrowIcon : (
-                <ArrowLeftIcon iconSize={arrowSize} color={arrowColor} />
-              )}
-              </span>
+            <button
+              data-glide-dir="<"
+              className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowPrev}`}
+              style={{
+                top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
+              }}
+            >
+              <ArrowLeftIcon iconSize={arrowSize} color={arrowColor} />
             </button>
           )}
+
           {rightArrowComponent ? (
             <Fragment>
-              {rightArrowComponent}
+              {cloneElement(rightArrowComponent as any, {
+                style: {
+                  ...customArrowComponentStyles,
+                  right: '1.5rem',
+                },
+                'data-glide-dir': '>',
+              })}
             </Fragment>
           ) : (
-            <button data-glide-dir=">">
-              <span
-                className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowNext}`}
-                style={{
-                  top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
-                }}
-              >
-              {rightArrowIcon ? rightArrowIcon : (
-                <ArrowRightIcon iconSize={arrowSize} color={arrowColor} />
-              )}
-              </span>
+            <button
+              data-glide-dir=">"
+              className={`${baseStyles.sliderArrow} ${baseStyles.sliderArrowNext}`}
+              style={{
+                top: adjustArrowYPosition ? adjustArrowYPosition : '42%',
+              }}
+            >
+              <ArrowRightIcon iconSize={arrowSize} color={arrowColor} />
             </button>
           )}
         </div>

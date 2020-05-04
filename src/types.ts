@@ -35,8 +35,6 @@ export interface IGlideProps {
   arrowSize?: number;
   arrowColor?: string;
   adjustArrowYPosition?: number | string;
-  leftArrowIcon?: React.ReactNode;
-  rightArrowIcon?: React.ReactNode;
   leftArrowComponent?: React.ReactNode
   rightArrowComponent?: React.ReactNode;
 
