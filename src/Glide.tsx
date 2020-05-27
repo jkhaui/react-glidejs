@@ -240,7 +240,7 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
     }
 
     return () => glide.destroy();
-  }, []);
+  }, [props]);
 
   return (
     <div
