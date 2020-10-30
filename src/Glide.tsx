@@ -1,18 +1,17 @@
 import React, {
-  Children,
   cloneElement,
   forwardRef,
   Fragment,
   useEffect,
   useRef,
   useState,
-} from 'react';
-import Glide from '@glidejs/glide';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
+} from "react";
+import Glide from "@glidejs/glide";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 
-import Slide from './Slide';
-import ArrowLeftIcon from './icons/ArrowLeftIcon';
-import ArrowRightIcon from './icons/ArrowRightIcon';
+import Slide from "./Slide";
+import ArrowLeftIcon from "./icons/ArrowLeftIcon";
+import ArrowRightIcon from "./icons/ArrowRightIcon";
 import {
   BUILD_AFTER,
   BUILD_BEFORE,
@@ -34,23 +33,23 @@ import {
   SWIPE_START,
   TRANSLATE_JUMP,
   UPDATE,
-} from './constants';
+} from "./constants";
 
-import { IGlideProps } from './types';
-import baseStyles from './index.module.css';
-import '@glidejs/glide/dist/css/glide.core.min.css';
+import { IGlideProps } from "./types";
+import baseStyles from "./index.module.css";
+import "@glidejs/glide/dist/css/glide.core.min.css";
 
 const styles = {
-  position: 'relative',
-  width: '100%',
-  overflow: 'hidden',
-  boxSizing: 'border-box',
+  position: "relative",
+  width: "100%",
+  overflow: "hidden",
+  boxSizing: "border-box",
 };
 
 const defaultProps = {
   /* Additional React props */
   children: null,
-  className: 'glide',
+  className: "glide",
   style: {},
   hideArrows: false,
 };
@@ -97,10 +96,11 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
     onTranslateJump,
   } = props;
 
-  if (!children || Children.count(children) < 2) {
-    throw new Error('At least 2 slides must be provided to the Glide'
-      + ' component.');
-  }
+  /* throwing an error here may be annoying and not useful. */
+  // if (!children || Children.count(children) < 2) {
+  //   throw new Error('At least 2 slides must be provided to the Glide'
+  //     + ' component.');
+  // }
 
   const glideRef = useRef<HTMLDivElement>(null);
 
@@ -122,10 +122,10 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
           // ...otherwise use the default duration of 400ms.
           : 400,
       animationTimingFunc: customSlideAnimation
-        ? ''
+        ? ""
         : animationTimingFunc
           ? animationTimingFunc
-          : 'cubic-bezier(0.165, 0.840, 0.440, 1.000)',
+          : "cubic-bezier(0.165, 0.840, 0.440, 1.000)",
     });
 
     glide.on(MOUNT_BEFORE, () => {
@@ -253,7 +253,7 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
     >
       <div className="slider__track glide__track" data-glide-el="track">
         <TransitionGroup component="ul" className="glide__slides">
-          {children.map((slide: React.ReactElement, index: number) => (
+          {children!.map((slide: React.ReactElement, index: number) => (
             <Fragment key={index}>
               {customSlideAnimation ? (
                 <CSSTransition
@@ -280,34 +280,36 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
           ))}
         </TransitionGroup>
       </div>
-
       {!hideArrows && (
         <div style={{ height: 0 }} data-glide-el="controls">
           {leftArrowComponent ? (
             <Fragment>
               {cloneElement(leftArrowComponent as any, {
                 className: `${baseStyles.sliderArrow} Glide-leftArrow`,
-                'data-glide-dir': '<',
+                "data-glide-dir": "<",
+                "aria-label": "left-arrow",
               })}
             </Fragment>
           ) : (
             <button
+              aria-label="left-arrow"
               data-glide-dir="<"
               className={`${baseStyles.sliderArrow} Glide-leftArrow`}
             >
               <ArrowLeftIcon iconSize={arrowSize} color={arrowColor} />
             </button>
           )}
-
           {rightArrowComponent ? (
             <Fragment>
               {cloneElement(rightArrowComponent as any, {
                 className: `${baseStyles.sliderArrow} Glide-rightArrow`,
-                'data-glide-dir': '>',
+                "data-glide-dir": ">",
+                "aria-label": "right-arrow",
               })}
             </Fragment>
           ) : (
             <button
+              aria-label="right-arrow"
               data-glide-dir=">"
               className={`${baseStyles.sliderArrow} Glide-rightArrow`}
             >
