@@ -281,7 +281,7 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
         </TransitionGroup>
       </div>
       {!hideArrows && (
-        <div style={{ height: 0 }} data-glide-el="controls">
+        <div className="glide__arrows" style={{ height: 0 }} data-glide-el="controls">
           {leftArrowComponent ? (
             <Fragment>
               {cloneElement(leftArrowComponent as any, {
