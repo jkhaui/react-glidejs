@@ -109,7 +109,7 @@ var SWIPE_MOVE = 'swipe.move';
 var SWIPE_END = 'swipe.end';
 var TRANSLATE_JUMP = 'translate.jump';
 
-var baseStyles = {"sliderArrow":"_10XKC"};
+var baseStyles = {"sliderArrow":"_10XKC","bullet":"_3I7ZQ"};
 
 var styles = {
   position: "relative",
@@ -352,13 +352,13 @@ var Glide = forwardRef(function (props, ref) {
     },
     "data-glide-el": "controls[nav]"
   }, bulletComponent ? React.createElement(Fragment, null, cloneElement(bulletComponent, {
-    className: baseStyles.bulletComponent + " Glide-bullet glide__bullet",
+    className: baseStyles.bullet + " Glide-bullet glide__bullet",
     "data-glide-dir": "=",
     "aria-label": "bullet"
   })) : React.createElement("button", {
     "aria-label": "bullet",
     "data-glide-dir": "<",
-    className: baseStyles.bulletComponent + " Glide-bullet glide__bullet"
+    className: baseStyles.bullet + " Glide-bullet glide__bullet"
   })));
 });
 
