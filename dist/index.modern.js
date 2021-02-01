@@ -353,11 +353,11 @@ var Glide = forwardRef(function (props, ref) {
     "data-glide-el": "controls[nav]"
   }, bulletComponent ? React.createElement(Fragment, null, cloneElement(bulletComponent, {
     className: baseStyles.bullet + " Glide-bullet glide__bullet",
-    "data-glide-dir": "=",
+    "data-glide-dir": "={i}",
     "aria-label": "bullet"
   })) : React.createElement("button", {
     "aria-label": "bullet",
-    "data-glide-dir": "<",
+    "data-glide-dir": "={i}",
     className: baseStyles.bullet + " Glide-bullet glide__bullet"
   })));
 });

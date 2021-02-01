@@ -327,14 +327,14 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
             <Fragment>
               {cloneElement(bulletComponent as any, {
                 className: `${baseStyles.bullet} Glide-bullet glide__bullet`,
-                "data-glide-dir": "=",
+                "data-glide-dir": "={i}",
                 "aria-label": "bullet",
               })}
             </Fragment>
           ) : (
             <button
               aria-label="bullet"
-              data-glide-dir="<"
+              data-glide-dir="={i}"
               className={`${baseStyles.bullet} Glide-bullet glide__bullet`}
             >
             </button>
