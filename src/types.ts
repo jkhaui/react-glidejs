@@ -34,8 +34,10 @@ export interface IGlideProps {
   hideArrows?: boolean;
   arrowSize?: number;
   arrowColor?: string;
-  leftArrowComponent?: React.ReactNode
+  leftArrowComponent?: React.ReactNode;
   rightArrowComponent?: React.ReactNode;
+  hideBullets?: boolean;
+  bulletComponent?: React.ReactNode;
 
   // Custom slide transitions.
   customSlideAnimation?: {

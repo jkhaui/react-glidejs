@@ -124,7 +124,8 @@ var defaultProps = {
   children: null,
   className: "glide",
   style: {},
-  hideArrows: false
+  hideArrows: false,
+  hideBullets: false
 };
 var Glide = React.forwardRef(function (props, ref) {
   if (props === void 0) {
@@ -136,10 +137,12 @@ var Glide = React.forwardRef(function (props, ref) {
       className = _props.className,
       slideClassName = _props.slideClassName,
       hideArrows = _props.hideArrows,
+      hideBullets = _props.hideBullets,
       arrowSize = _props.arrowSize,
       arrowColor = _props.arrowColor,
       leftArrowComponent = _props.leftArrowComponent,
       rightArrowComponent = _props.rightArrowComponent,
+      bulletComponent = _props.bulletComponent,
       style = _props.style,
       startAt = _props.startAt,
       animationDuration = _props.animationDuration,
@@ -345,7 +348,21 @@ var Glide = React.forwardRef(function (props, ref) {
   }, React__default.createElement(ArrowRightIcon, {
     iconSize: arrowSize,
     color: arrowColor
-  }))));
+  }))), !hideBullets && React__default.createElement("div", {
+    className: "glide__bullets",
+    style: {
+      height: 0
+    },
+    "data-glide-el": "controls[nav]"
+  }, bulletComponent ? React__default.createElement(React.Fragment, null, React.cloneElement(bulletComponent, {
+    className: baseStyles.bulletComponent + " Glide-bullet glide__bullet",
+    "data-glide-dir": "=",
+    "aria-label": "bullet"
+  })) : React__default.createElement("button", {
+    "aria-label": "bullet",
+    "data-glide-dir": "<",
+    className: baseStyles.bulletComponent + " Glide-bullet glide__bullet"
+  })));
 });
 
 module.exports = Glide;

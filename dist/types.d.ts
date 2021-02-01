@@ -30,6 +30,8 @@ export interface IGlideProps {
     arrowColor?: string;
     leftArrowComponent?: React.ReactNode;
     rightArrowComponent?: React.ReactNode;
+    hideBullets?: boolean;
+    bulletComponent?: React.ReactNode;
     customSlideAnimation?: {
         timeout: number;
         classNames: string | CSSTransitionClassNames;

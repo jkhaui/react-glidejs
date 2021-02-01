@@ -121,7 +121,8 @@ var defaultProps = {
   children: null,
   className: "glide",
   style: {},
-  hideArrows: false
+  hideArrows: false,
+  hideBullets: false
 };
 var Glide = forwardRef(function (props, ref) {
   if (props === void 0) {
@@ -133,10 +134,12 @@ var Glide = forwardRef(function (props, ref) {
       className = _props.className,
       slideClassName = _props.slideClassName,
       hideArrows = _props.hideArrows,
+      hideBullets = _props.hideBullets,
       arrowSize = _props.arrowSize,
       arrowColor = _props.arrowColor,
       leftArrowComponent = _props.leftArrowComponent,
       rightArrowComponent = _props.rightArrowComponent,
+      bulletComponent = _props.bulletComponent,
       style = _props.style,
       startAt = _props.startAt,
       animationDuration = _props.animationDuration,
@@ -342,7 +345,21 @@ var Glide = forwardRef(function (props, ref) {
   }, React.createElement(ArrowRightIcon, {
     iconSize: arrowSize,
     color: arrowColor
-  }))));
+  }))), !hideBullets && React.createElement("div", {
+    className: "glide__bullets",
+    style: {
+      height: 0
+    },
+    "data-glide-el": "controls[nav]"
+  }, bulletComponent ? React.createElement(Fragment, null, cloneElement(bulletComponent, {
+    className: baseStyles.bulletComponent + " Glide-bullet glide__bullet",
+    "data-glide-dir": "=",
+    "aria-label": "bullet"
+  })) : React.createElement("button", {
+    "aria-label": "bullet",
+    "data-glide-dir": "<",
+    className: baseStyles.bulletComponent + " Glide-bullet glide__bullet"
+  })));
 });
 
 export default Glide;
