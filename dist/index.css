@@ -1,0 +1,37 @@
+/* Potential fixes for an undesirable and intermittent flashing background bug. */
+.glide__slide {
+  /* Fix for flashing background image on slide */
+  transform: translate3d(0, 0, 0);
+}
+
+.slider__frame[class*=active] {
+  z-index: 1;
+}
+
+._10XKC {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  border: 0;
+  outline: 0;
+  padding: 12px;
+  background-color: #EEE;
+  position: absolute;
+  border-radius: 50px;
+  top: 35%;
+}
+
+._10XKC:hover {
+  background-color: #DEDEDE;
+  transition: background-color .2s ease-in-out;
+}
+
+.Glide-rightArrow {
+  right: 1.5rem;
+  padding-left: 14px;
+}
+
+.Glide-leftArrow {
+  left: 1.5rem;
+  padding-right: 14px;
+}
