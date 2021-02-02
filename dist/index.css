@@ -1,18 +1,14 @@
 /* Potential fixes for an undesirable and intermittent flashing background bug. */
-:global .glide__slide {
+.glide__slide {
   /* Fix for flashing background image on slide */
-  -webkit-transform: translate3d(0, 0, 0);
-  -moz-transform: translate3d(0, 0, 0);
-  -ms-transform: translate3d(0, 0, 0);
-  -o-transform: translate3d(0, 0, 0);
   transform: translate3d(0, 0, 0);
 }
 
-:global .slider__frame[class*="active"] {
+.slider__frame[class*="active"] {
   z-index: 1;
 }
 
-.sliderArrow {
+._10XKC {
   display: flex;
   align-items: center;
   cursor: pointer;
@@ -25,22 +21,22 @@
   top: 35%;
 }
 
-.sliderArrow:hover {
+._10XKC:hover {
   background-color: #dedede;
   transition: background-color 0.2s ease-in-out;
 }
 
-:global .Glide-rightArrow {
+.Glide-rightArrow {
   right: 1.5rem;
   padding-left: 14px;
 }
 
-:global .Glide-leftArrow {
+.Glide-leftArrow {
   left: 1.5rem;
   padding-right: 14px;
 }
 
-.bullet {
+._3I7ZQ {
   background-color: white;
   width: 9px;
   height: 9px;
@@ -53,7 +49,7 @@
   margin: 0 0.3em;
 }
 
-:global .bullet[class*="active"] {
+.bullet[class*="active"] {
   background-color: #0088ce;
   border-color: #0088ce;
 }

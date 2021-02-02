@@ -52,6 +52,7 @@ const defaultProps = {
   className: "glide",
   style: {},
   hideArrows: false,
+  hideBullets: false,
 };
 
 export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
@@ -63,10 +64,12 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
     className,
     slideClassName,
     hideArrows,
+    hideBullets,
     arrowSize,
     arrowColor,
     leftArrowComponent,
     rightArrowComponent,
+    bulletComponent,
     style,
     startAt,
     animationDuration,
@@ -281,11 +284,11 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
         </TransitionGroup>
       </div>
       {!hideArrows && (
-        <div style={{ height: 0 }} data-glide-el="controls">
+        <div className="glide__arrows" style={{ height: 0 }} data-glide-el="controls">
           {leftArrowComponent ? (
             <Fragment>
               {cloneElement(leftArrowComponent as any, {
-                className: `${baseStyles.sliderArrow} Glide-leftArrow`,
+                className: `${baseStyles.sliderArrow} Glide-leftArrow glide__arrow glide__arrow--left`,
                 "data-glide-dir": "<",
                 "aria-label": "left-arrow",
               })}
@@ -294,7 +297,7 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
             <button
               aria-label="left-arrow"
               data-glide-dir="<"
-              className={`${baseStyles.sliderArrow} Glide-leftArrow`}
+              className={`${baseStyles.sliderArrow} Glide-leftArrow glide__arrow glide__arrow--left`}
             >
               <ArrowLeftIcon iconSize={arrowSize} color={arrowColor} />
             </button>
@@ -302,7 +305,7 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
           {rightArrowComponent ? (
             <Fragment>
               {cloneElement(rightArrowComponent as any, {
-                className: `${baseStyles.sliderArrow} Glide-rightArrow`,
+                className: `${baseStyles.sliderArrow} Glide-rightArrow glide__arrow glide__arrow--right`,
                 "data-glide-dir": ">",
                 "aria-label": "right-arrow",
               })}
@@ -311,9 +314,29 @@ export default forwardRef<React.MutableRefObject<any>, IGlideProps>((
             <button
               aria-label="right-arrow"
               data-glide-dir=">"
-              className={`${baseStyles.sliderArrow} Glide-rightArrow`}
+              className={`${baseStyles.sliderArrow} Glide-rightArrow glide__arrow glide__arrow--right`}
             >
               <ArrowRightIcon iconSize={arrowSize} color={arrowColor} />
+            </button>
+          )}
+        </div>
+      )}
+      {!hideBullets && (
+        <div className="glide__bullets" style={{ height: 0 }} data-glide-el="controls[nav]">
+          {bulletComponent ? (
+            <Fragment>
+              {cloneElement(bulletComponent as any, {
+                className: `${baseStyles.bullet} Glide-bullet glide__bullet`,
+                "data-glide-dir": "={index}",
+                "aria-label": "bullet",
+              })}
+            </Fragment>
+          ) : (
+            <button
+              aria-label="bullet"
+              data-glide-dir="={i}"
+              className={`${baseStyles.bullet} Glide-bullet glide__bullet`}
+            >
             </button>
           )}
         </div>
