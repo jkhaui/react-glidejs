@@ -74,7 +74,7 @@ export interface IGlideProps {
   focusAt?: number | string;
   gap?: number;
   autoplay?: number | boolean;
-  hoverPause?: boolean;
+  hoverpause?: boolean;
   keyboard?: boolean;
   bound?: boolean;
   swipeThreshold?: number | boolean;
